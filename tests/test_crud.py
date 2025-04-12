@@ -28,27 +28,24 @@ def event_loop():
     yield loop
     loop.close()
 
-@pytest.fixture
+import pytest_asyncio
+
+@pytest_asyncio.fixture
 async def test_db():
-    """
-    Fixture that creates an in-memory SQLite database,
-    initializes the tables defined in the Base metadata,
-    and yields an asynchronous session for testing.
-    """
     engine = create_async_engine(DATABASE_URL, echo=False)
     async_session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
-    # Create the tables in the test database
+    # Create the tables in the test database.
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
-    
-    # Create and yield a session for tests
+
     session = async_session()
     try:
         yield session
     finally:
         await session.close()
         await engine.dispose()
+
 
 @pytest.mark.asyncio
 async def test_create_user(test_db):

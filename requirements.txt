@@ -12,3 +12,7 @@ python-multipart
 pytest
 pytest-asyncio
 aiosqlite
+httpx
+asgi-lifespan
+pytest-cov
+
