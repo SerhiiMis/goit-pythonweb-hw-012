@@ -18,34 +18,6 @@ from app.database import Base
 # Define the in-memory database URL using SQLite and aiosqlite driver
 DATABASE_URL = "sqlite+aiosqlite:///:memory:"
 
-@pytest.fixture(scope="session")
-def event_loop():
-    """
-    Provide an event loop for the entire test session.
-    This fixture ensures that all async tests use the same loop.
-    """
-    loop = asyncio.get_event_loop()
-    yield loop
-    loop.close()
-
-import pytest_asyncio
-
-@pytest_asyncio.fixture
-async def test_db():
-    engine = create_async_engine(DATABASE_URL, echo=False)
-    async_session = sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
-
-    # Create the tables in the test database.
-    async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
-
-    session = async_session()
-    try:
-        yield session
-    finally:
-        await session.close()
-        await engine.dispose()
-
 
 @pytest.mark.asyncio
 async def test_create_user(test_db):

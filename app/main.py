@@ -6,12 +6,24 @@ from slowapi.middleware import SlowAPIMiddleware
 from slowapi.errors import RateLimitExceeded
 
 from fastapi.security import OAuth2PasswordBearer
+from contextlib import asynccontextmanager
 
+from app.database import engine, Base
 from app.routers import contacts, auth, users
 from app.services.limiter import limiter
-from app import database
 
-app = FastAPI(title="Contacts API", debug=True)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+    yield
+
+app = FastAPI(title="Contacts API", debug=True, lifespan=lifespan)
+
+# Routers
+app.include_router(auth.router)
+app.include_router(users.router)
+app.include_router(contacts.router)
 
 # Init rate limiter
 app.state.limiter = limiter
@@ -51,7 +63,6 @@ def custom_openapi():
     app.openapi_schema = openapi_schema
     return app.openapi_schema
 
-
 # Rate limit error handler
 @app.exception_handler(RateLimitExceeded)
 async def ratelimit_handler(request: Request, exc: RateLimitExceeded):
@@ -59,16 +70,5 @@ async def ratelimit_handler(request: Request, exc: RateLimitExceeded):
         status_code=HTTP_429_TOO_MANY_REQUESTS,
         content={"detail": "Rate limit exceeded. Try again later."}
     )
-
-# Routers
-app.include_router(auth.router)
-app.include_router(users.router)
-app.include_router(contacts.router)
-
-# DB init
-@app.on_event("startup")
-async def on_startup():
-    async with database.engine.begin() as conn:
-        await conn.run_sync(database.Base.metadata.create_all)
 
 app.openapi = custom_openapi
