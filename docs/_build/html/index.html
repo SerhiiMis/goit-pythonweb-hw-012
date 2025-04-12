@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Contacts API documentation &#8212; Contacts API 1 documentation</title>
+    <title>Contacts API Documentation &#8212; Contacts API 1 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
     <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
@@ -32,12 +32,50 @@
           <div class="body" role="main">
             
   <section id="contacts-api-documentation">
-<h1>Contacts API documentation<a class="headerlink" href="#contacts-api-documentation" title="Link to this heading">¶</a></h1>
-<p>Add your content using <code class="docutils literal notranslate"><span class="pre">reStructuredText</span></code> syntax. See the
-<a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html">reStructuredText</a>
-documentation for details.</p>
+<h1>Contacts API Documentation<a class="headerlink" href="#contacts-api-documentation" title="Link to this heading">¶</a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h2>
+<p>This documentation provides details on the Contacts API, which is a secure, asynchronous REST API for managing personal contacts. The API supports the following functionalities:</p>
+<ul class="simple">
+<li><p><strong>User Authentication:</strong> Secure JWT-based login and registration.</p></li>
+<li><p><strong>Email Verification:</strong> Users verify their email to activate their accounts.</p></li>
+<li><p><strong>Contact Management:</strong> Create, update, delete, search, and list contacts.</p></li>
+<li><p><strong>Avatar Upload:</strong> Upload user avatars using Cloudinary.</p></li>
+<li><p><strong>Rate Limiting:</strong> Protect sensitive endpoints such as the user profile endpoint.</p></li>
+<li><p><strong>Caching:</strong> (Upcoming feature) Using Redis for caching user data.</p></li>
+<li><p><strong>Password Reset:</strong> (Upcoming feature) Secure mechanism for resetting passwords.</p></li>
+<li><p><strong>Role-based Access:</strong> (Upcoming feature) Separate admin and user roles.</p></li>
+</ul>
+</section>
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>JWT Authentication:</strong> Secure login and issuance of tokens.</p></li>
+<li><p><strong>CRUD Operations:</strong> Create, retrieve, update, and delete contacts.</p></li>
+<li><p><strong>Email Verification:</strong> Activate user accounts through email confirmation.</p></li>
+<li><p><strong>Avatar Upload:</strong> Users can upload and update their avatars via Cloudinary integration.</p></li>
+<li><p><strong>Rate Limiting:</strong> Limits the number of requests to sensitive endpoints.</p></li>
+</ul>
+</section>
+<section id="installation-setup">
+<h2>Installation &amp; Setup<a class="headerlink" href="#installation-setup" title="Link to this heading">¶</a></h2>
+<p>For complete instructions on installation, please refer to the <strong>Getting Started</strong> section in the project README.</p>
+</section>
+<section id="api-endpoints">
+<h2>API Endpoints<a class="headerlink" href="#api-endpoints" title="Link to this heading">¶</a></h2>
+<p>The API includes several endpoints grouped by functionality:</p>
+<ul class="simple">
+<li><p><strong>Authentication:</strong> <cite>/auth/signup</cite>, <cite>/auth/login</cite>, <cite>/auth/verify-email</cite></p></li>
+<li><p><strong>User Profile:</strong> <cite>/users/me</cite>, <cite>/users/avatar</cite></p></li>
+<li><p><strong>Contacts:</strong> <cite>/contacts/</cite> (CRUD operations), <cite>/contacts/search/</cite>, <cite>/contacts/upcoming-birthdays/</cite></p></li>
+</ul>
+</section>
+<section id="additional-documentation">
+<h2>Additional Documentation<a class="headerlink" href="#additional-documentation" title="Link to this heading">¶</a></h2>
+<p>For detailed API references, please consult the module documentation generated via autodoc. This includes descriptions of functions, parameters, and responses.</p>
 <div class="toctree-wrapper compound">
 </div>
+</section>
 </section>
 
 

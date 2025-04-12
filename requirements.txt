@@ -9,3 +9,6 @@ slowapi
 email-validator
 cloudinary
 python-multipart
+pytest
+pytest-asyncio
+aiosqlite
