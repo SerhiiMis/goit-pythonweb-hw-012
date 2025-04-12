@@ -1,5 +1,6 @@
 from fastapi import Request
 from urllib.parse import urlencode
+import logging
 
 
 def generate_verification_link(request: Request, email: str) -> str:
@@ -18,3 +19,7 @@ def send_verification_email(request: Request, email: str) -> None:
     """
     verification_link = generate_verification_link(request, email)
     print(f"📧 Email verification link for {email}: {verification_link}")
+
+
+async def send_email(to_email: str, subject: str, body: str):
+    print(f"📧 To: {to_email}\nSubject: {subject}\n\n{body}")

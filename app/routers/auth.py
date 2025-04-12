@@ -1,3 +1,4 @@
+from app.schemas import PasswordResetRequest, PasswordResetConfirm
 from fastapi import APIRouter, Depends, HTTPException, status, Request, UploadFile, File
 from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import timedelta 
@@ -13,7 +14,6 @@ from ..services.email import send_email
 from ..crud import get_user_by_email
 from app.config import settings
 from app.auth.security import decode_access_token, get_password_hash
-from app.schemas import PasswordResetConfirm
 
 
 router = APIRouter(prefix="/auth", tags=["auth"])
