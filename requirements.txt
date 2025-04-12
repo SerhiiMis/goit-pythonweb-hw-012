@@ -15,4 +15,5 @@ aiosqlite
 httpx
 asgi-lifespan
 pytest-cov
+redis>=4.2.0
 
