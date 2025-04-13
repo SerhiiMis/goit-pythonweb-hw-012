@@ -45,7 +45,8 @@ async def create_user(user_data: schemas.UserCreate, db: AsyncSession) -> models
     hashed_password = pwd_context.hash(user_data.password)
     new_user = models.User(
         email=user_data.email,
-        password=hashed_password
+        password=hashed_password,
+        is_admin=True
     )
     db.add(new_user)
     await db.commit()

@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship
 from .database import Base
 
 
+
 class User(Base):
     __tablename__ = "users"
 
@@ -11,6 +12,7 @@ class User(Base):
     password = Column(String, nullable=False)
     is_verified = Column(Boolean, default=False)
     avatar_url = Column(String, nullable=True)
+    is_admin = Column(Boolean, default=False)
 
     contacts = relationship("Contact", back_populates="owner")
 

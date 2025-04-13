@@ -11,6 +11,7 @@ from contextlib import asynccontextmanager
 from app.database import engine, Base
 from app.routers import contacts, auth, users
 from app.services.limiter import limiter
+from app.routers import admin
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -21,6 +22,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="Contacts API", debug=True, lifespan=lifespan)
 
 # Routers
+app.include_router(admin.router)
 app.include_router(auth.router)
 app.include_router(users.router)
 app.include_router(contacts.router)
