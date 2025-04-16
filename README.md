@@ -1,41 +1,46 @@
 # Contacts API
 
-A secure asynchronous REST API for managing personal contacts, built with FastAPI, PostgreSQL, JWT and Docker.
+A secure asynchronous REST API for managing personal contacts, built with FastAPI, PostgreSQL, JWT, Docker, and Redis.
 
-## Features
+## 🚀 Features
 
-- JWT-based authentication and authorization
-- Only authenticated users can access their own contacts
-- Email verification via link
-- Rate limiting for the `/users/me` endpoint
-- CORS enabled for API
-- Avatar upload with Cloudinary integration
-- Docker Compose support for quick startup
+- ✅ JWT-based authentication and email verification
+- ✅ Rate limiting for protected endpoints
+- ✅ Cloudinary avatar uploads
+- ✅ Contact CRUD operations
+- ✅ Upcoming birthdays filter
+- ✅ Role-based access control (`user` / `admin`)
+- ✅ Password reset flow via email
+- ✅ Redis caching for user session
+- ✅ Full async support with FastAPI + SQLAlchemy
+- ✅ Dockerized with PostgreSQL and Redis
+- ✅ 79%+ test coverage with `pytest`
 
-## Technologies
+## 🛠️ Technologies
 
 - Python 3.12+
 - FastAPI
-- SQLAlchemy (Async)
+- SQLAlchemy (async)
 - PostgreSQL + asyncpg
-- Alembic
+- Redis
 - Docker & Docker Compose
+- Cloudinary
+- pytest / pytest-asyncio / pytest-cov
 - Pydantic v2
 - Uvicorn
-- python-jose (JWT)
-- Cloudinary SDK
-- SlowAPI (rate limit)
+- python-jose
+- Alembic
 
-## Getting Started
+## 📦 Getting Started
 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/SerhiiMis/goit-pythonweb-hw-10.git
-cd goit-pythonweb-hw-10
+git clone https://github.com/SerhiiMis/goit-pythonweb-hw-012.git
+cd goit-pythonweb-hw-012
 ```
 
-### 2. Create and configure `.env`
+### 2. Create `.env`
 
 ```env
 DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/contacts_db
@@ -44,42 +49,109 @@ SECRET_KEY=your_secret_key
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
+
+REDIS_URL=redis://redis:6379/0
+FRONTEND_URL=http://localhost:3000
 ```
 
-### 3. Run with Docker
+### 3. Run the project
 
 ```bash
-docker compose up --build
+docker-compose up --build
 ```
 
-App will be available at:  
+Access the API docs at:  
 📄 Swagger UI → [http://localhost:8000/docs](http://localhost:8000/docs)
 
-## API Overview
+---
+
+## 📚 API Overview
 
 ### 🔐 Authentication
 
-- `POST /auth/signup` — Register user
-- `POST /auth/login` — Login and receive JWT
-- `GET /auth/verify-email?email=...` — Verify user email
+| Method | Endpoint                       | Description             |
+| ------ | ------------------------------ | ----------------------- |
+| POST   | `/auth/signup`                 | Register a user         |
+| POST   | `/auth/login`                  | Login and receive JWT   |
+| GET    | `/auth/verify-email`           | Email verification link |
+| POST   | `/auth/request-reset-password` | Request password reset  |
+| POST   | `/auth/reset-password`         | Reset password          |
 
 ### 👤 Users
 
-- `GET /users/me` — Get current user info (rate-limited)
-- `POST /users/avatar` — Upload user avatar to Cloudinary
+| Method | Endpoint        | Description                |
+| ------ | --------------- | -------------------------- |
+| GET    | `/users/me`     | Get current user info      |
+| POST   | `/users/avatar` | Upload avatar (Cloudinary) |
 
-### 📇 Contacts (authorized access only)
+### 📇 Contacts (auth required)
 
-- `POST /contacts/` — Create new contact
-- `GET /contacts/` — Get all user's contacts
-- `GET /contacts/{id}` — Get contact by ID
-- `PUT /contacts/{id}` — Update contact
-- `DELETE /contacts/{id}` — Delete contact
-- `GET /contacts/search/?query=...` — Search contacts
-- `GET /contacts/upcoming-birthdays/` — Birthdays in next 7 days
+| Method | Endpoint                        | Description              |
+| ------ | ------------------------------- | ------------------------ |
+| POST   | `/contacts/`                    | Create contact           |
+| GET    | `/contacts/`                    | Get all contacts         |
+| GET    | `/contacts/{id}`                | Get contact by ID        |
+| PUT    | `/contacts/{id}`                | Update contact           |
+| DELETE | `/contacts/{id}`                | Delete contact           |
+| GET    | `/contacts/search/?query=...`   | Search contacts          |
+| GET    | `/contacts/upcoming-birthdays/` | Birthdays in next 7 days |
 
-## Environment Files
+### 🛡️ Admin
 
-- `.env` — used for environment variables (not committed)
-- `.example.env` — shows required env variables
-- `docker-compose.yml` — builds API and DB containers
+| Method | Endpoint       | Description                |
+| ------ | -------------- | -------------------------- |
+| GET    | `/admin/users` | Get all users (admin only) |
+
+---
+
+## 🧪 Testing
+
+Run tests and check coverage:
+
+```bash
+pytest --cov=app --cov-report=term-missing
+```
+
+Test coverage: **≥ 79%**
+
+---
+
+## 📖 Documentation
+
+Autogenerated with Sphinx. To build docs:
+
+```bash
+cd docs
+make html
+```
+
+Open `docs/_build/html/index.html` in a browser.
+
+---
+
+## 📂 Project Structure
+
+```
+.
+├── app/
+│   ├── auth/              # Auth logic
+│   ├── routers/           # API routes
+│   ├── services/          # Redis, Cloudinary, Email
+│   ├── models.py
+│   ├── crud.py
+│   ├── database.py
+│   ├── main.py
+│   └── ...
+├── tests/
+├── Dockerfile
+├── docker-compose.yml
+├── .env
+├── README.md
+└── requirements.txt
+```
+
+---
+
+## 📃 License
+
+MIT © 2025 Serhii Mishovych
