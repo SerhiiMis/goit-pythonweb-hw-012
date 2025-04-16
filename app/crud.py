@@ -24,7 +24,7 @@ async def get_user_by_email(email: str, db: AsyncSession) -> Optional[models.Use
     return result.scalar_one_or_none()
 
 
-async def create_user(user_data: schemas.UserCreate, db: AsyncSession) -> models.User:
+async def create_user(user_data: schemas.UserCreate, db: AsyncSession, is_admin: bool = False) -> models.User:
     """
     Create a new user with a hashed password.
 
@@ -46,7 +46,7 @@ async def create_user(user_data: schemas.UserCreate, db: AsyncSession) -> models
     new_user = models.User(
         email=user_data.email,
         password=hashed_password,
-        is_admin=True
+        is_admin=is_admin
     )
     db.add(new_user)
     await db.commit()
